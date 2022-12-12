@@ -27,5 +27,4 @@ class PredictionAlgorithm(ABC):
   @abstractmethod
   def prepare_results_folder(self) -> str:
     global jobname
-    %shell cp metrics.txt $jobname
     return jobname

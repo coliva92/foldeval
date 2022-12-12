@@ -1,3 +1,4 @@
+from algorithms.generic import PredictionAlgorithm
 from IPython.utils import io
 import os
 import sys

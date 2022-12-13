@@ -1,4 +1,6 @@
 from datetime import datetime
+from typing import Optional
+from pydrive.drive import GoogleDrive
 
 
 
@@ -7,3 +9,16 @@ from datetime import datetime
 def create_jobname_suffix() -> str:
   now = str(datetime.today())
   return now.replace('-', '').replace(' ', '').replace(':', '').replace('.', '')
+
+
+
+def zip_and_download_folder(folder: str, 
+                            drive: Optional[GoogleDrive] = None):
+  from google.colab import files
+  from colabtoolbox import gdrive
+  zipped_folder = f'{folder}.zip'
+  %shell zip -q -r $zipped_folder $folder
+  if drive is None: 
+    files.download(zipped_folder)
+    return
+  return gdrive.upload_to_google_drive(drive, zipped_folder)

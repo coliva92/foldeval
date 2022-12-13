@@ -15,9 +15,8 @@ from typing import Tuple
 @cmd.extend
 def superposition_metrics(model: str, 
                           reference: str, 
-                          cutoffs: list = [ 1., 2., 4., 8. ],
-                          save2file: bool = False,
-                          filename: str = 'metrics.txt') -> Tuple[float, float]:
+                          cutoffs: list = [ 1., 2., 4., 8. ]
+                         ) -> Tuple[float, float]:
   model += ' and name CA'
   reference += ' and name CA'
   rmsd = cmd.align(model, reference, cycles=0, object='aln')[0]
@@ -33,20 +32,16 @@ def superposition_metrics(model: str,
   for cutoff in cutoffs:
     gdt_scores.append((distances <= cutoff).sum() / float(len(distances)))
   gdt_ts = numpy.mean(gdt_scores)
-  out = [ f"GDT_{cutoffs[i]}={gdt_scores[i]:.4f}" for i in range(len(cutoffs)) ]
-  print(f" ".join(out))
-  print(f"RMSD={rmsd:.4f} GDT={gdt_ts:.4f}")
-  if save2file: 
-    with open(filename, 'at') as file:
-      file.write(f'RMSD   {rmsd:.4f}\n')
-      file.write(f'GDT_TS {gdt_ts:.4f}\n')
   return rmsd, gdt_ts
 
 
 
 if __name__ == '__main__':
     model, reference = cmd.get_object_list('all')
-    gdt_ts, rmsd = superposition_metrics(model, 
-                                         reference, 
-                                         save2file=True, 
-                                         filename='metrics.txt')
+    gdt_ts, rmsd = superposition_metrics(model, reference)
+    with open('metrics.txt', 'at') as file:
+      file.write(f'RMSD={rmsd:.4}\n')
+      file.write(f'RMSD_ATOMS=CA\n')
+      file.write(f'GDT={gdt_ts:.4}\n')
+      file.write(f'GDT_ATOMS=CA\n)
+      file.write(f'GDT_CUTOFFS=[ 1, 2, 3, 4 ]\n')

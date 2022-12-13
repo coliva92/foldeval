@@ -43,5 +43,5 @@ if __name__ == '__main__':
       file.write(f'RMSD={rmsd:.4}\n')
       file.write(f'RMSD_ATOMS=CA\n')
       file.write(f'GDT={gdt_ts:.4}\n')
-      file.write(f'GDT_ATOMS=CA\n)
+      file.write(f'GDT_ATOMS=CA\n')
       file.write(f'GDT_CUTOFFS=[ 1, 2, 3, 4 ]\n')

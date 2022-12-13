@@ -13,7 +13,8 @@ def create_jobname_suffix() -> str:
 
 
 def zip_and_download_folder(folder: str, 
-                            drive: Optional[GoogleDrive] = None):
+                            drive: Optional[GoogleDrive] = None
+                           ) -> Optional[str]:
   from google.colab import files
   from colabtoolbox import gdrive
   import os
@@ -21,5 +22,5 @@ def zip_and_download_folder(folder: str,
   os.system(f'zip -q -r {zipped_folder} {folder}')
   if drive is None: 
     files.download(zipped_folder)
-    return
+    return None
   return gdrive.upload_to_google_drive(drive, zipped_folder)

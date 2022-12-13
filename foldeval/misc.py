@@ -16,8 +16,9 @@ def zip_and_download_folder(folder: str,
                             drive: Optional[GoogleDrive] = None):
   from google.colab import files
   from colabtoolbox import gdrive
+  import os
   zipped_folder = f'{folder}.zip'
-  %shell zip -q -r $zipped_folder $folder
+  os.system(f'zip -q -r {zipped_folder} {folder}')
   if drive is None: 
     files.download(zipped_folder)
     return
